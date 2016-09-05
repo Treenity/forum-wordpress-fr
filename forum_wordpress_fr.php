@@ -12,15 +12,6 @@
  */
 
 /**
- *
- */
-define( 'FWF_FOLDER', basename( __DIR__ ) );
-/**
- *
- */
-define( 'FWF_PLUGIN_DIR', PLUGINDIR . '/' . FWF_FOLDER . '/' );
-
-/**
  * Class Forum_wordpress_fr
  */
 class Forum_wordpress_fr {
@@ -29,32 +20,31 @@ class Forum_wordpress_fr {
 	 */
 	public function __construct() {
 		if ( is_admin() ) {
+			load_plugin_textdomain( __CLASS__, false, plugin_dir_path( __FILE__ ) . '/languages' );
 			add_action( 'wp_dashboard_setup', array( &$this, 'wp_dashboard_setup' ), 8 );
 		}
 	}
 
 	/**
-	 *
+	 * Add dashboard
 	 */
 	public function wp_dashboard_setup() {
 		if ( ! function_exists( 'wp_add_dashboard_widget' ) ) {
 			return;
 		}
-		// for gettext.
-		load_plugin_textdomain( __CLASS__, false, FWF_PLUGIN_DIR . 'languages' );
-		// for javascript.
-		wp_register_script( __CLASS__, '/' . FWF_PLUGIN_DIR . 'js/fwf.js', array( 'jquery' ), false, 1 );
 		// for widget.
 		wp_add_dashboard_widget( __CLASS__, __( 'wordpress-fr.net/support', __CLASS__ ), array(
 			&$this,
-			'output',
+			'render',
 		), array( &$this, 'control' ) );
 	}
 
 	/**
+	 * Generate informations
+	 *
 	 * @return stdClass
 	 */
-	public function export() {
+	public function generate() {
 		global $wp_version, $required_php_version, $wpdb, $required_mysql_version;
 		$export = new stdClass();
 		$export->wp_version = $wp_version;
@@ -62,9 +52,9 @@ class Forum_wordpress_fr {
 		$export->required_php_version = $required_php_version;
 		$export->mysql_version = $wpdb->db_version();
 		$export->required_mysql_version = $required_mysql_version;
-		$export->site_url = $this->site_url();
+		$export->site_url = defined( 'WP_SITEURL' ) ? WP_SITEURL : site_url();
 		// todo: Get host with dns_get_record( $this->site_url() ) ?
-		$export->host = $_SERVER['SERVER_SOFTWARE'];
+		$export->host = filter_input( INPUT_SERVER, 'SERVER_SOFTWARE' );
 		foreach ( get_plugins() as $plugin ) {
 			$export->plugins[] = $plugin;
 		}
@@ -73,15 +63,11 @@ class Forum_wordpress_fr {
 	}
 
 	/**
-	 * @return string
+	 * Render the informations
 	 */
-	public function site_url() {
-		return defined( 'WP_SITEURL' ) ? WP_SITEURL : site_url();
-	}
-
-	public function output() {
+	public function render() {
 		wp_enqueue_style( __CLASS__, plugin_dir_url( __FILE__ ) . '/assets/css/global.css' );
-		$datas = $this->export();
+		$datas = $this->generate();
 		?>
 		<div class="forumWordpress">
 			<div class="forumWordpress__panel">
