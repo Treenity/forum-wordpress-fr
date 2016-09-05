@@ -1,0 +1,10 @@
+.forumWordpress__panel__list strong {
+  font-weight: bold; }
+.forumWordpress__panel__list ul {
+  list-style: circle;
+  list-style-position: outside; }
+  .forumWordpress__panel__list ul li {
+    margin-left: 16px;
+    margin-bottom: 0; }
+
+/*# sourceMappingURL=global.css.map */

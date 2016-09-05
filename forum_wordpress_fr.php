@@ -8,7 +8,7 @@
  * Tested up to: 4.5
  * Version: 4.1
  *
- * @package forum-wordpress-fr
+ * @package forumWordpress
  */
 
 /**
@@ -63,7 +63,8 @@ class Forum_wordpress_fr {
 		$export->mysql_version = $wpdb->db_version();
 		$export->required_mysql_version = $required_mysql_version;
 		$export->site_url = $this->site_url();
-		$export->host = gethostname();
+		// todo: Get host with dns_get_record( $this->site_url() ) ?
+		$export->host = $_SERVER['SERVER_SOFTWARE'];
 		foreach ( get_plugins() as $plugin ) {
 			$export->plugins[] = $plugin;
 		}
@@ -79,41 +80,50 @@ class Forum_wordpress_fr {
 	}
 
 	public function output() {
+		wp_enqueue_style( __CLASS__, plugin_dir_url( __FILE__ ) . '/assets/css/global.css' );
 		$datas = $this->export();
 		?>
-		<div class="panel">
-			<ul class="panel__list">
-				<li>
-					<strong>
-						<?php printf( __( '%s version', __CLASS__ ), 'Wordpress' ) ?> :
-					</strong>
-					<?php echo $datas->wp_version ?>
-				</li>
-				<li>
-					<strong>
-						<?php printf( __( '%s version', __CLASS__ ), 'PHP' ) ?> :
-					</strong>
-					<?php echo $datas->php_version ?>
-				</li>
-				<li>
-					<strong>
-						<?php printf( __( '%s version', __CLASS__ ), 'Mysql' ) ?> :
-					</strong>
-					<?php echo $datas->mysql_version ?>
-				</li>
-				<li>
-					<strong>
-						<?php _e( 'Plugins', __CLASS__ ) ?> :
-					</strong>
-					<ul>
-						<?php foreach ( (array) $datas->plugins as $plugin ) : ?>
-							<li>
-								<?php printf( '%1$s (%2$s)', $plugin['Name'], $plugin['Version'] ) ?>
-							</li>
-						<?php endforeach; ?>
-					</ul>
-				</li>
-			</ul>
+		<div class="forumWordpress">
+			<div class="forumWordpress__panel">
+				<ul class="forumWordpress__panel__list">
+					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--wp_version">
+						<strong>
+							<?php printf( __( '%s version', __CLASS__ ), 'Wordpress' ) ?> :
+						</strong>
+						<?php echo $datas->wp_version ?>
+					</li>
+					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--php_version">
+						<strong>
+							<?php printf( __( '%s version', __CLASS__ ), 'PHP' ) ?> :
+						</strong>
+						<?php echo $datas->php_version ?>
+					</li>
+					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--mysql_version">
+						<strong>
+							<?php printf( __( '%s version', __CLASS__ ), 'Mysql' ) ?> :
+						</strong>
+						<?php echo $datas->mysql_version ?>
+					</li>
+					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--host">
+						<strong>
+							<?php _e( 'Host', __CLASS__ ) ?> :
+						</strong>
+						<?php echo $datas->host ?>
+					</li>
+					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--plugins">
+						<strong>
+							<?php _e( 'Plugins', __CLASS__ ) ?> :
+						</strong>
+						<ul>
+							<?php foreach ( (array) $datas->plugins as $plugin ) : ?>
+								<li>
+									<?php printf( '%1$s (%2$s)', $plugin['Name'], $plugin['Version'] ) ?>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<?php
 	}
