@@ -44,7 +44,7 @@ class Forum_wordpress_fr {
 	 *
 	 * @return stdClass
 	 */
-	public function generate() {
+	public function get_datas() {
 		global $wp_version, $required_php_version, $wpdb, $required_mysql_version;
 		$export = new stdClass();
 		$export->wp_version = $wp_version;
@@ -67,7 +67,7 @@ class Forum_wordpress_fr {
 	 */
 	public function render() {
 		wp_enqueue_style( __CLASS__, plugin_dir_url( __FILE__ ) . '/assets/css/global.css' );
-		$datas = $this->generate();
+		$datas = $this->get_datas();
 		?>
 		<div class="forumWordpress">
 			<div class="forumWordpress__panel">
