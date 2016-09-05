@@ -1,8 +1,10 @@
 <?php
 /**
  * Plugin Name: Forum_wordpress_fr
+ * Plugin URI: https://wordpress.org/plugins/forum-wordpress-fr/
  * Description: Questionnaire du forum http://www.wordpress-fr.net/support
  * Author: Andre Renaut
+ * Author Ronan Pozzi <contact@treenity-web.fr>
  * Author URI: http://www.mailpress.org
  * Requires at least: 3.3
  * Tested up to: 4.5
