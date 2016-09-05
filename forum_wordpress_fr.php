@@ -14,6 +14,8 @@ define( 'FWF_PLUGIN_DIR', PLUGINDIR . '/' . FWF_FOLDER . '/' );
 
 class Forum_wordpress_fr {
 	const txt_domain = 'Forum_wordpress_fr';
+	private $with_flash;
+	private $site_url;
 
 	function __construct() {
 		if ( is_admin() ) {
@@ -36,8 +38,8 @@ class Forum_wordpress_fr {
 		// for javascript
 		wp_register_script( __CLASS__, '/' . FWF_PLUGIN_DIR . 'js/fwf.js', array( 'jquery' ), false, 1 );
 
-		$L10n['ko'] = esc_js( __( 'S&eacute;lectionner le texte ci-dessous puis CTRL+C ou Pomme+C', self::txt_domain ) ) . "\n\n\n";
-		$L10n['ok'] = esc_js( __( 'Copi&eacute; dans le presse-papier', self::txt_domain ) );
+		$L10n['ko'] = esc_js( __( 'Sélectionner le texte ci-dessous puis CTRL+C ou Pomme+C', self::txt_domain ) ) . "\n\n\n";
+		$L10n['ok'] = esc_js( __( 'Copié dans le presse-papier', self::txt_domain ) );
 		if ( $this->with_flash ) {
 			$L10n['embed'] = ( $this->is_ie() ) ? "<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' align='middle' codebase='" . ( ( is_ssl() ) ? 'https://' : 'http://' ) . "download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0' width='WW' height='HH' id='fwf_zc_movie'><param name='allowScriptAccess' value='always' /><param name='allowFullScreen' value='false' /><param name='wmode' value='transparent'/><param name='loop' value='false' /><param name='menu' value='false' /><param name='quality' value='best' /><param name='bgcolor' value='#ffffff' /><param name='movie' value='" . $this->site_url . '/' . FWF_PLUGIN_DIR . 'js/fwf_zc.swf' . "' /><param name='flashvars' value='id=1&width=WW&height=HH' /></object>" : "<embed pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' allowScriptAccess='always' allowFullScreen='false' loop='false' menu='false' quality='best' bgcolor='#ffffff' wmode='transparent' align='middle' width='WW' height='HH' flashvars='id=1&width=WW&height=HH' id='fwf_zc_movie' name='fwf_zc_movie' src='" . $this->site_url . '/' . FWF_PLUGIN_DIR . 'js/fwf_zc.swf' . "' />";
 		}
@@ -83,24 +85,25 @@ class Forum_wordpress_fr {
 			$wp_theme_version = $wp_theme->display( 'Version', true, false );
 			$wp_theme_url     = $wp_theme->display( 'ThemeURI', true, false );
 			if ( ! empty( $wp_theme_url ) ) {
-				$wp_theme_url = sprintf( __( '<strong>- Th&egrave;me URI :</strong> %s', self::txt_domain ), $wp_theme_url );
+				$wp_theme_url = sprintf( __( '<strong>- Thème URI :</strong> %s', self::txt_domain ), $wp_theme_url );
 			}
 		} else {
 			global $wp_themes;
+			/** @noinspection PhpDeprecationInspection */
 			$wp_theme_name    = get_current_theme();
 			$wp_theme         = $wp_themes[ $wp_theme_name ];
 			$wp_theme_version = $wp_theme['Version'];
 			$wp_theme_url     = $wp_theme['Author URI'];
 			if ( ! empty( $wp_theme_url ) ) {
-				$wp_theme_url = sprintf( __( '<strong>- Th&egrave;me Auteur URI :</strong> %s', self::txt_domain ), $wp_theme_url );
+				$wp_theme_url = sprintf( __( '<strong>- Thème Auteur URI :</strong> %s', self::txt_domain ), $wp_theme_url );
 			}
 		}
-		$txt[] = sprintf( __( '<strong>- Th&egrave;me utilis&eacute; :</strong> %s (%s)', self::txt_domain ), $wp_theme_name );
+		$txt[] = sprintf( __( '<strong>- Thème utilisé :</strong> %s (%s)', self::txt_domain ), $wp_theme_name );
 		if ( ! empty( $wp_theme_url ) ) {
 			$txt[] = $wp_theme_url;
 		}
 		if ( ! empty( $wp_theme_version ) ) {
-			$txt[] = sprintf( __( '<strong>- Version du Th&egrave;me; :</strong> %s (%s)', self::txt_domain ), $wp_theme_version );
+			$txt[] = sprintf( __( '<strong>- Version du Thème; :</strong> %s (%s)', self::txt_domain ), $wp_theme_version );
 		}
 		// plugins
 		foreach ( (array) get_plugins() as $plugin_file => $plugin_data ) {
@@ -115,7 +118,7 @@ class Forum_wordpress_fr {
 		}
 
 		if ( isset( $ms_plugins ) ) {
-			$txt[] = sprintf( __( '<strong>- Extensions r&eacute;seau en place :</strong> %s', self::txt_domain ), join( ', ', $ms_plugins ) );
+			$txt[] = sprintf( __( '<strong>- Extensions réseau en place :</strong> %s', self::txt_domain ), join( ', ', $ms_plugins ) );
 		}
 
 		// site url
@@ -124,7 +127,7 @@ class Forum_wordpress_fr {
 
 		// host
 		$host  = $_SERVER['SERVER_SOFTWARE'];
-		$txt[] = sprintf( __( "<strong>- Nom de l'h&eacute;bergeur :</strong> %s", self::txt_domain ), $host );
+		$txt[] = sprintf( __( "<strong>- Nom de l'hébergeur :</strong> %s", self::txt_domain ), $host );
 		?>
 		<div id='fwf_content'><strong><?php _e( "Ma configuration WP actuelle :", self::txt_domain ); ?></strong>
 
