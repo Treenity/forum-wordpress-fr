@@ -1,24 +1,19 @@
 .forumWordpress {
-}
+  &__panel {
+    &__list {
+      strong {
+        font-weight: bold;
+      }
+      ul {
+        list-style: circle outside;
+        li {
+          margin-left: 16px;
+          margin-bottom: 0;
+        }
+      }
+      &__item{
 
-.forumWordpress__panel {
-}
-
-.forumWordpress__panel__list {
-  strong {
-    font-weight: bold;
-  }
-  ul {
-    list-style: circle;
-    list-style-position: outside;
-    li {
-      margin-left: 16px;
-      margin-bottom: 0;
+      }
     }
-  }
-}
-
-.forumWordpress__panel__list__item {
-  &--plugins {
   }
 }
