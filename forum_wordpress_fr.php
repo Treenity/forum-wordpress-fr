@@ -80,20 +80,18 @@ class Forum_wordpress_fr {
 
 		// theme
 		if ( function_exists( 'wp_get_theme' ) ) {
-			$wp_theme         = wp_get_theme( get_stylesheet() );
-			$wp_theme_name    = $wp_theme->display( 'Name', true, false );
-			$wp_theme_version = $wp_theme->display( 'Version', true, false );
-			$wp_theme_url     = $wp_theme->display( 'ThemeURI', true, false );
+			$wp_theme      = wp_get_theme( get_stylesheet() );
+			$wp_theme_name = $wp_theme->display( 'Name', true, false );
+			$wp_theme_url  = $wp_theme->display( 'ThemeURI', true, false );
 			if ( ! empty( $wp_theme_url ) ) {
 				$wp_theme_url = sprintf( __( '<strong>- Thème URI :</strong> %s', self::txt_domain ), $wp_theme_url );
 			}
 		} else {
 			global $wp_themes;
 			/** @noinspection PhpDeprecationInspection */
-			$wp_theme_name    = get_current_theme();
-			$wp_theme         = $wp_themes[ $wp_theme_name ];
-			$wp_theme_version = $wp_theme['Version'];
-			$wp_theme_url     = $wp_theme['Author URI'];
+			$wp_theme_name = get_current_theme();
+			$wp_theme      = $wp_themes[ $wp_theme_name ];
+			$wp_theme_url  = $wp_theme['Author URI'];
 			if ( ! empty( $wp_theme_url ) ) {
 				$wp_theme_url = sprintf( __( '<strong>- Thème Auteur URI :</strong> %s', self::txt_domain ), $wp_theme_url );
 			}
@@ -101,9 +99,6 @@ class Forum_wordpress_fr {
 		$txt[] = sprintf( __( '<strong>- Thème utilisé :</strong> %s (%s)', self::txt_domain ), $wp_theme_name );
 		if ( ! empty( $wp_theme_url ) ) {
 			$txt[] = $wp_theme_url;
-		}
-		if ( ! empty( $wp_theme_version ) ) {
-			$txt[] = sprintf( __( '<strong>- Version du Thème; :</strong> %s (%s)', self::txt_domain ), $wp_theme_version );
 		}
 		// plugins
 		foreach ( (array) get_plugins() as $plugin_file => $plugin_data ) {
