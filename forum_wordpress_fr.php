@@ -101,7 +101,7 @@ class Forum_wordpress_fr {
 				$wp_theme_url = sprintf( __( '<strong>- Thème Auteur URI :</strong> %s', __CLASS__ ), $wp_theme_url );
 			}
 		}
-		$txt[] = sprintf( __( '<strong>- Thème utilisé :</strong> %s (%s)', __CLASS__ ), $wp_theme_name );
+		$txt[] = sprintf( __( '<strong>- Thème utilisé :</strong> %s', __CLASS__ ), $wp_theme_name );
 		if ( ! empty( $wp_theme_url ) ) {
 			$txt[] = $wp_theme_url;
 		}
