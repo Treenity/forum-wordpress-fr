@@ -8,7 +8,7 @@
  * Tested up to: 4.5
  * Version: 4.1
  *
- * @package forumWordpress
+ * @package forumWordpressFr
  */
 
 /**
@@ -69,34 +69,34 @@ class Forum_wordpress_fr {
 		wp_enqueue_style( __CLASS__, plugin_dir_url( __FILE__ ) . '/assets/css/global.css' );
 		$datas = $this->get_datas();
 		?>
-		<div class="forumWordpress">
-			<div class="forumWordpress__panel">
-				<ul class="forumWordpress__panel__list">
-					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--wp_version">
+		<div class="forumWordpressFr">
+			<div class="forumWordpressFr__panel">
+				<ul class="forumWordpressFr__panel__list">
+					<li class="forumWordpressFr__panel__list__item forumWordpressFr__panel__list__item--wp_version">
 						<strong>
 							<?php printf( __( '%s version', __CLASS__ ), 'Wordpress' ) ?> :
 						</strong>
 						<?php echo $datas->wp_version ?>
 					</li>
-					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--php_version">
+					<li class="forumWordpressFr__panel__list__item forumWordpressFr__panel__list__item--php_version">
 						<strong>
 							<?php printf( __( '%s version', __CLASS__ ), 'PHP' ) ?> :
 						</strong>
 						<?php echo $datas->php_version ?>
 					</li>
-					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--mysql_version">
+					<li class="forumWordpressFr__panel__list__item forumWordpressFr__panel__list__item--mysql_version">
 						<strong>
 							<?php printf( __( '%s version', __CLASS__ ), 'Mysql' ) ?> :
 						</strong>
 						<?php echo $datas->mysql_version ?>
 					</li>
-					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--host">
+					<li class="forumWordpressFr__panel__list__item forumWordpressFr__panel__list__item--host">
 						<strong>
 							<?php _e( 'Host', __CLASS__ ) ?> :
 						</strong>
 						<?php echo $datas->host ?>
 					</li>
-					<li class="forumWordpress__panel__list__item forumWordpress__panel__list__item--plugins">
+					<li class="forumWordpressFr__panel__list__item forumWordpressFr__panel__list__item--plugins">
 						<strong>
 							<?php _e( 'Plugins', __CLASS__ ) ?> :
 						</strong>
