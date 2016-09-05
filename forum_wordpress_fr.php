@@ -153,7 +153,9 @@ class Forum_wordpress_fr {
 	 * @return bool
 	 */
 	public function with_flash() {
-		$options = get_option( __CLASS__ );
+		if ( ! $options = get_option( __CLASS__ ) ) {
+			return false;
+		}
 
 		return ! ( array_key_exists( 'hidden', $options ) && ! array_key_exists( 'Flash', $options ) );
 	}
